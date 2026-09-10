@@ -5748,64 +5748,90 @@ local J=E()
 print("going to",J)
 
 local K=string.format([[
-            task.spawn(function()
-                task.wait(3)
-                local Players   = game:GetService("Players")
-                local player    = Players.LocalPlayer
-                local playerGui = player:WaitForChild("PlayerGui")
+    task.spawn(function()
+        task.wait(3)
+        local Players   = game:GetService("Players")
+        local player    = Players.LocalPlayer
+        local playerGui = player:WaitForChild("PlayerGui")
 
-                local Loading = playerGui:FindFirstChild("Loading")
-                if Loading then
-                    local Play = Loading:WaitForChild("Main"):WaitForChild("Bottom"):WaitForChild("Play")
-                    repeat task.wait(0.1) until Play.Visible == true
-                    firesignal(Play.Activated)
+        -- Fire play button if loading screen is present
+        local Loading = playerGui:FindFirstChild("Loading")
+        if Loading then
+            local Main   = Loading:WaitForChild("Main",   10)
+            local Bottom = Main   and Main:WaitForChild("Bottom", 10)
+            local Play   = Bottom and Bottom:WaitForChild("Play",   10)
+            if Play then
+                repeat task.wait(0.1) until Play.Visible == true
+                firesignal(Play.Activated)
+            end
+        end
+
+        local ok, m_References = pcall(function()
+            return require(game:GetService("ReplicatedStorage"):WaitForChild("References", 10))
+        end)
+        if not ok or not m_References then
+            warn("refs not found after teleport on FOENEM")
+            return
+        end
+        local ok2, m_TravelHandler = pcall(function()
+            return require(m_References.PlayerScripts:WaitForChild("Secondary", 10):WaitForChild("TravelHandler", 10))
+        end)
+        if not ok2 or not m_TravelHandler then
+            warn("travel not found after teleport xd")
+            return
+        end
+
+        task.wait(3)
+
+        local function getCurrentIsland()
+            local islandsFolder = workspace:FindFirstChild("Islands")
+            if not islandsFolder then return nil end
+            local p = game:GetService("Players").LocalPlayer
+            for _, island in ipairs(islandsFolder:GetChildren()) do
+                if island:FindFirstChild(p.Name) then return island end
+            end
+            return nil
+        end
+
+        -- Wait for island to register
+        local deadline = tick() + 15
+        repeat task.wait(1) until getCurrentIsland() ~= nil or tick() > deadline
+
+        local current = getCurrentIsland()
+
+        -- "Private" = still on loading screen / pre-spawn limbo.
+        -- Fire the play button again and wait for the real island.
+        if current and current.Name == "Private" then
+            local Loading2 = playerGui:FindFirstChild("Loading")
+            if Loading2 then
+                local Main2   = Loading2:WaitForChild("Main",   10)
+                local Bottom2 = Main2   and Main2:WaitForChild("Bottom", 10)
+                local Play2   = Bottom2 and Bottom2:WaitForChild("Play",   10)
+                if Play2 then
+                    repeat task.wait(0.1) until Play2.Visible == true
+                    firesignal(Play2.Activated)
                 end
+            end
 
-                local ok, m_References = pcall(function()
-                    return require(game:GetService("ReplicatedStorage"):WaitForChild("References", 10))
-                end)
-                if not ok or not m_References then
-                    warn("refs not found lol")
-                    return
-                end
-                local ok2, m_TravelHandler = pcall(function()
-                    return require(m_References.PlayerScripts:WaitForChild("Secondary", 10):WaitForChild("TravelHandler", 10))
-                end)
-                if not ok2 or not m_TravelHandler then
-                    warn("travel not found after teleport xd")
-                    return
-                end
+            -- Wait up to 20s for the real island to appear
+            local retryDeadline = tick() + 20
+            repeat
+                task.wait(1)
+                current = getCurrentIsland()
+            until (current and current.Name ~= "Private") or tick() > retryDeadline
+        end
 
-                task.wait(3)
-
-                local function getCurrentIsland()
-                    local islandsFolder = workspace:FindFirstChild("Islands")
-                    if not islandsFolder then return nil end
-                    local p = game:GetService("Players").LocalPlayer
-                    for _, island in ipairs(islandsFolder:GetChildren()) do
-                        if island:FindFirstChild(p.Name) then return island end
-                    end
-                    return nil
-                end
-
-                local deadline = tick() + 15
-                repeat task.wait(1) until getCurrentIsland() ~= nil or tick() > deadline
-
-                local current = getCurrentIsland()
-                if current and current.Name == "Training Island" then
-                    -- Queue the main script reload before travelling to return island
-                    -- so it fires the moment the player lands there
-                    queueonteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/bananasxyz/satanas/refs/heads/main/mainuimandem.lua"))()')
-                    local point = %d
-                    pcall(function() m_TravelHandler.Travel("%s", point) end)
-                    print("travelling back type shii")
-                else
-                    warn("not on Training Island type shii, got:", current and current.Name or "nil")
-                    -- Queue reload anyway so the script comes back regardless
-                    queueonteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/bananasxyz/satanas/refs/heads/main/mainuimandem.lua"))()')
-                end
-            end)
-        ]],
+        if current and (current.Name == "Training Island" or current.Name == "Private") then
+            queueonteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/bananasxyz/satanas/refs/heads/main/mainuimandem.lua"))()')
+            local point = %d
+            pcall(function() m_TravelHandler.Travel("%s", point) end)
+            print("travelling on folk back to %s — script queued for reload")
+        else
+            warn("didnt expect this island lad:", current and current.Name or "nil")
+            queueonteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/bananasxyz/satanas/refs/heads/main/mainuimandem.lua"))()')
+        end
+    end)
+]],
 b[J]or 1,
 J,
 J
