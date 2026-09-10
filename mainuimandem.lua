@@ -5745,7 +5745,7 @@ task.spawn(function()
 I()
 
 local J=E()
-print("[ServerHop] Queueing return to:",J)
+print("going to",J)
 
 local K=string.format([[
             task.spawn(function()
@@ -5765,14 +5765,14 @@ local K=string.format([[
                     return require(game:GetService("ReplicatedStorage"):WaitForChild("References", 10))
                 end)
                 if not ok or not m_References then
-                    warn("[ServerHop] References not found after teleport")
+                    warn("refs not found lol")
                     return
                 end
                 local ok2, m_TravelHandler = pcall(function()
                     return require(m_References.PlayerScripts:WaitForChild("Secondary", 10):WaitForChild("TravelHandler", 10))
                 end)
                 if not ok2 or not m_TravelHandler then
-                    warn("[ServerHop] TravelHandler not found after teleport")
+                    warn("travel not found after teleport xd")
                     return
                 end
 
@@ -5798,9 +5798,9 @@ local K=string.format([[
                     queueonteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/bananasxyz/satanas/refs/heads/main/mainuimandem.lua"))()')
                     local point = %d
                     pcall(function() m_TravelHandler.Travel("%s", point) end)
-                    print("[ServerHop] Travelling back to %s — script queued for reload")
+                    print("travelling back type shii")
                 else
-                    warn("[ServerHop] Not on Training Island, got:", current and current.Name or "nil")
+                    warn("not on Training Island type shii, got:", current and current.Name or "nil")
                     -- Queue reload anyway so the script comes back regardless
                     queueonteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/bananasxyz/satanas/refs/heads/main/mainuimandem.lua"))()')
                 end
@@ -5812,7 +5812,7 @@ J
 )
 
 queueonteleport(K)
-print("[ServerHop] Script queued — travelling to Training Island")
+print("queued tha script on foenem")
 
 y("Training Island")
 
@@ -10015,7 +10015,7 @@ end,
 
 
 aA:AddDropdown("IslandToGoBackTo",{
-Text="Travel back to island",
+Text="Return Island",
 Values={
 "LowTier",
 "MidTier",
