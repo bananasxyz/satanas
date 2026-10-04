@@ -5634,15 +5634,18 @@ local D=math.huge
 for E,F in B:GetDescendants()do
 if F:IsA("Model")
 and F:GetAttribute("behaviour")=="WanderingAnimal"
-
 and F:GetAttribute("origin")~="shop"
 then
-local G=F:FindFirstChild("HumanoidRootPart")
-if G then
-local H=(A.Position-G.Position).Magnitude
-if H<D then
-D=H
-C=G
+
+local G=F:FindFirstAncestor("Horse Sale Barn")
+if G then continue end
+
+local H=F:FindFirstChild("HumanoidRootPart")
+if H then
+local I=(A.Position-H.Position).Magnitude
+if I<D then
+D=I
+C=H
 end
 end
 end
@@ -5650,6 +5653,7 @@ end
 
 return C
 end
+
 local function A(B)
 local C={}
 for D,E in ipairs(ap)do
@@ -5866,6 +5870,7 @@ L=0
 end
 
 local function Q(R)
+if not R then return end
 if J then return end
 J=true
 H=0
