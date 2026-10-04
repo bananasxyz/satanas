@@ -2342,7 +2342,7 @@ Value=ad.Default;
 Min=ad.Min;
 Max=ad.Max;
 Rounding=ad.Rounding;
-MaxSize=232;
+MaxSize=230;
 Type='Slider';
 Callback=ad.Callback or function(ae)end;
 };
@@ -5634,7 +5634,7 @@ local D=math.huge
 for E,F in B:GetDescendants()do
 if F:IsA("Model")
 and F:GetAttribute("behaviour")=="WanderingAnimal"
-and F:GetAttribute("species")=="Horse"
+
 and F:GetAttribute("origin")~="shop"
 then
 local G=F:FindFirstChild("HumanoidRootPart")
@@ -6246,7 +6246,7 @@ task.wait(d*x)
 end
 end)
 
-if not x then warn("[AutoLasso] Equip error:",y)end
+if not x then warn("equip error",y)end
 ar=false
 end
 
@@ -6262,7 +6262,7 @@ end
 local function t(u,v)
 local w=an[u]
 if not w then
-warn(string.format("[AutoLasso] No shop source for material id=%d",u))
+warn(string.format("buy material error: id=%d",u))
 return 0
 end
 
@@ -6274,7 +6274,7 @@ ah.Network:FireServer("Shopping","BuyShopItem",w.shop,w.slot,v,nil)
 
 local y=s(u,x)
 if not y then
-warn(string.format("[AutoLasso] Buy timed out id=%d shop=%s slot=%d qty=%d",
+warn(string.format("buy material error: id=%d shop=%s slot=%d qty=%d",
 u,w.shop,w.slot,v))
 return 0
 end
@@ -6294,7 +6294,7 @@ amt=w,
 
 local y=s(v,x)
 if not y then
-warn(string.format("[AutoLasso] Craft timed out id=%d qty=%d",v,w))
+warn(string.format("craft timed out id=%d qty=%d",v,w))
 return 0
 end
 return h(v)-x
@@ -6303,7 +6303,7 @@ end
 local function v(w,x)
 local y=am[w]
 if not y then
-warn(string.format("[AutoLasso] No recipe for lasso id=%d",w))
+warn(string.format("restock error for lasso id=%d",w))
 return
 end
 
@@ -6316,7 +6316,7 @@ local D=math.max(0,B-C)
 if D>0 then
 local E=t(A.id,D)
 if E<D then
-warn(string.format("[AutoLasso] Material short: id=%d needed=%d got=%d",
+warn(string.format("material short: id=%d needed=%d got=%d",
 A.id,D,E))
 end
 task.wait(ao.buyCooldown)
@@ -6332,7 +6332,7 @@ end
 
 z=math.min(z,ap)
 if z<=0 then
-warn("[AutoLasso] No materials to craft after buying — aborting.")
+warn("restock error: no materials to craft after buying")
 return
 end
 
@@ -6349,7 +6349,7 @@ task.wait(0.3)
 ah.Network:FireServer("QuickEquipment","Use","Lasso")
 end
 else
-warn("[AutoLasso] Craft fired but no lassos received.")
+warn("craft error: Craft fired but no lassos received.")
 end
 end
 
@@ -6371,7 +6371,7 @@ local w=ao.selectedLassoId
 if h(w)<=ao.restockThreshold then
 b=true
 local x,y=pcall(v,w,ao.restockAmount)
-if not x then warn("[AutoLasso] Restock error:",y)end
+if not x then warn("restock error:",y)end
 b=false
 end
 end
@@ -6933,10 +6933,10 @@ timestamp=os.date("!%Y-%m-%dT%H:%M:%SZ"),
 task.spawn(function()
 local l,m=pcall(function()
 local l=(syn and syn.request)or http_request or request
-if not l then warn("[AutoSell] Webhook failed: no http function available")return end
+if not l then warn("[webhook failed: no http function available")return end
 l({Url=aq,Method="POST",Headers={["Content-Type"]="application/json"},Body=k})
 end)
-if not l then warn("[AutoSell] Webhook failed:",m)end
+if not l then warn("webhook failed:",m)end
 end)
 end
 
@@ -7031,7 +7031,7 @@ local o=al.GetFollowerInstance()
 if o then
 al.Interact(o,"Pickup")
 else
-warn("[AutoSell] Auto-pickup failed — follower not found for guid:",j)
+warn("auto pickup failed, follower not found for guid:",j)
 end
 end)
 end
@@ -7042,7 +7042,7 @@ ae.recordSell()
 end
 end)
 end)
-if not l then warn("Bind callback error:",m)end
+if not l then warn("bind callback error:",m)end
 end)
 end
 else
@@ -7086,7 +7086,7 @@ for l,m in ipairs(am)do
 if m==i then k=true break end
 end
 end
-if not k then warn("[AutoSell] Unknown lock option:",i)return end
+if not k then warn("unknown lock option:",i)return end
 an[i]=j
 end,
 getLockOption=function(i)return an[i]==true end,
@@ -8943,7 +8943,7 @@ Misc=f:AddTab("Misc"),
 
 local j=i.HomePageLowkey:AddLeftGroupbox("bullshit")
 
-local k=j:AddLabel('[+] meow meow meow')
+local k=j:AddLabel('summoned from the water, washed up on the shore')
 
 
 
@@ -9273,6 +9273,8 @@ end,
 Disabled=false,
 Visible=true,
 })
+
+print("NIGGER!!!")
 
 s:AddButton("Pickup Horse",function()
 ai.pickupFollower()
