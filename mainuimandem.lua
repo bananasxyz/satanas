@@ -9943,84 +9943,38 @@ end
 end)
 end)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+local function az(aA,aB,aC)
+task.spawn(function()
+local aD=game:GetService("ReplicatedStorage")
+local aE=require(aD:WaitForChild("References"))
+local aF=aE.Utilities.Network
+
+
+for aG=1,aC do
+local aH,aI=pcall(function()
+return aF:InvokeServer("TradeIn","Trade",aA)
+end)
+if aH and aI then
+
+else
+
+end
+if aG<aC then task.wait(0.8)end
+end
+
+end)
+end
 
 ay:AddButton("Golden Apples (20)",function()
-doTrade("goldenAppleBasket","Golden Apples",1)
+az("goldenAppleBasket","Golden Apples",1)
 end)
 
 ay:AddButton("Volcanic Minerals (5)",function()
-doTrade("volcanicMinerals","Volcanic Minerals",1)
+az("volcanicMinerals","Volcanic Minerals",1)
 end)
 
 ay:AddButton("Training Receipts (100)",function()
-doTrade("trainingReceipts","Training Receipts",1)
+az("trainingReceipts","Training Receipts",1)
 end)
 
 
@@ -10041,18 +9995,18 @@ end)
 
 
 
-local az=i.Misc:AddLeftGroupbox("Inherited")
+local aA=i.Misc:AddLeftGroupbox("Inherited")
 
-az:AddToggle("ServerHopEnabled",{
+aA:AddToggle("ServerHopEnabled",{
 Text="Server Hop",
 Default=false,
 Tooltip="After all islands are exhausted, hop via Training Island to the selected island",
-Callback=function(aA)
-ae.setServerHop(aA)
+Callback=function(aB)
+ae.setServerHop(aB)
 end,
 })
 
-az:AddDropdown("IslandToGoBackTo",{
+aA:AddDropdown("IslandToGoBackTo",{
 Text="Return Island",
 Values={
 "LowTier",
@@ -10062,23 +10016,23 @@ Values={
 Default=1,
 Multi=false,
 Tooltip="Select an island to return to after server hop",
-Callback=function(aA)
-ae.setIslandChoice(aA)
+Callback=function(aB)
+ae.setIslandChoice(aB)
 end,
 Disabled=false,
 Visible=true,
 })
 
-local aA=i.Misc:AddRightGroupbox("Teleport")
+local aB=i.Misc:AddRightGroupbox("Teleport")
 
 
 
 
-local aB=game:GetService("ReplicatedStorage")
-local aC=require(aB:WaitForChild("References"))
-local aD=require(aC.PlayerScripts:WaitForChild("Secondary"):WaitForChild("TravelHandler"))
+local aC=game:GetService("ReplicatedStorage")
+local aD=require(aC:WaitForChild("References"))
+local aE=require(aD.PlayerScripts:WaitForChild("Secondary"):WaitForChild("TravelHandler"))
 
-local aE={
+local aF={
 
 "Mainland",
 "Blizzard Island",
@@ -10096,7 +10050,7 @@ local aE={
 "Rescue Island",
 }
 
-local aF={
+local aG={
 ["Mainland"]=8,
 ["Blizzard Island"]=1,
 ["Forest Island"]=1,
@@ -10118,74 +10072,74 @@ local aF={
 ["Wild Island"]=1,
 }
 
-local function aG(aH)
-if not aH then return end
-local aI=aF[aH]or 1
+local function aH(aI)
+if not aI then return end
+local aJ=aG[aI]or 1
 pcall(function()
-aD.Travel(aH,aI)
+aE.Travel(aI,aJ)
 end)
 end
 
-aA:AddDropdown("IslandTravel",{
+aB:AddDropdown("IslandTravel",{
 Text="Travel to Island",
-Values=aE,
+Values=aF,
 Default=1,
 Multi=false,
 Tooltip="Select an island to travel to",
-Callback=function(aH)
-selected_island=aH
+Callback=function(aI)
+selected_island=aI
 end,
 Disabled=false,
 Visible=true,
 })
 
-aA:AddButton("Travel",function()
-aG(selected_island)
+aB:AddButton("Travel",function()
+aH(selected_island)
 end)
 
 ab:SetWatermarkVisibility(true)
 
-local aH=tick()
-local aI=0;
-local aJ=60;
-local aK=(function()return math.floor(game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue())end)
-local aL=pcall(function()return aK()end)
+local aI=tick()
+local aJ=0;
+local aK=60;
+local aL=(function()return math.floor(game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue())end)
+local aM=pcall(function()return aL()end)
 
-local aM=game:GetService("RunService").RenderStepped:Connect(function()
-aI+=1;
+local aN=game:GetService("RunService").RenderStepped:Connect(function()
+aJ+=1;
 
-if(tick()-aH)>=1 then
-aJ=aI;
-aH=tick();
-aI=0;
+if(tick()-aI)>=1 then
+aK=aJ;
+aI=tick();
+aJ=0;
 end;
 
-if aL then
+if aM then
 ab:SetWatermark(("fantasyhaxx - [buyer build] / %d fps / %d ms"):format(
-math.floor(aJ),
-aK()
+math.floor(aK),
+aL()
 ));
 else
 ab:SetWatermark(("fantasyhaxx - [buyer build] / %d fps"):format(
-math.floor(aJ)
+math.floor(aK)
 ));
 end
 end);
 
 ab:OnUnload(function()
-aM:Disconnect()
+aN:Disconnect()
 ab.Unloaded=true
 end)
 
 
-local aN=i["UI Settings"]:AddLeftGroupbox("Menu")
+local aO=i["UI Settings"]:AddLeftGroupbox("Menu")
 
 
 
 
-aN:AddLabel("Menu bind"):AddKeyPicker("MenuKeybind",{Default="RightShift",NoUI=true,Text="Menu keybind"})
-aN:AddButton("Unload",function()ab:Unload()end)
-aN:AddButton("Switch UI",function()
+aO:AddLabel("Menu bind"):AddKeyPicker("MenuKeybind",{Default="RightShift",NoUI=true,Text="Menu keybind"})
+aO:AddButton("Unload",function()ab:Unload()end)
+aO:AddButton("Switch UI",function()
 ab:Unload()
 task.wait(2)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/bananasxyz/satanas/refs/heads/main/olduimandem.lua"))()
